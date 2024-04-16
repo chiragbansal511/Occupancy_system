@@ -22,15 +22,18 @@ function App() {
     setLocation([]);
 
     finaldata.forEach(element => {
-      const difflat = element.latitude * (Math.PI / 180) - givenLocation.latitude * (Math.PI / 180);
-      const difflon = element.longitude * (Math.PI / 180) - givenLocation.longitude * (Math.PI / 180);
 
-      let a = Math.sin(difflat / 2) ** 2 + Math.cos(element.latitude * (Math.PI / 180)) * Math.cos(givenLocation.latitude * (Math.PI / 180)) * Math.sin(difflon / 2) ** 2;
-      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      let distance = R * c;
+      if (element.type == type) {
+        const difflat = element.latitude * (Math.PI / 180) - givenLocation.latitude * (Math.PI / 180);
+        const difflon = element.longitude * (Math.PI / 180) - givenLocation.longitude * (Math.PI / 180);
 
-      if (distance <= range) {
-        setLocation(prevvalue => [element, ...prevvalue]);
+        let a = Math.sin(difflat / 2) ** 2 + Math.cos(element.latitude * (Math.PI / 180)) * Math.cos(givenLocation.latitude * (Math.PI / 180)) * Math.sin(difflon / 2) ** 2;
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        let distance = R * c;
+
+        if (distance <= range) {
+          setLocation(prevvalue => [element, ...prevvalue]);
+        }
       }
     });
   }
@@ -62,7 +65,7 @@ function App() {
     });
 
     setMarkers(newMarkers);
-  }, [india.lng, india.lat, zoom, location, type]);
+  }, [india.lng, india.lat, zoom, location]);
 
   return (
     <div className="App">
@@ -75,9 +78,24 @@ function App() {
       }}>
         Select
         <div style={{ display: select, flexDirection: 'column' }}>
-          <div onClick={() => { setType("hospital") }}>Hospitals</div>
-          <div onClick={() => { setType("hotels") }}>Hotels</div>
-          <div onClick={() => { setType("pump") }}>Pump</div>
+          <div onClick={() => {
+            setType("hospital"); console.log(type); finder(range, {
+              latitude: 30.68894,
+              longitude: 76.39308
+            })
+          }}>Hospitals</div>
+          <div onClick={() => {
+            setType("hotels"); console.log(type); finder(range, {
+              latitude: 30.68894,
+              longitude: 76.39308
+            })
+          }}>Hotels</div>
+          <div onClick={() => {
+            setType("pump"); console.log(type); finder(range, {
+              latitude: 30.68894,
+              longitude: 76.39308
+            })
+          }}>Pump</div>
         </div>
       </div>
 
@@ -90,7 +108,7 @@ function App() {
         })
       }}>Find Locations</button>
 
-      {JSON.stringify(location)}
+      {/* {JSON.stringify(location)} */}
       <div className="map-wrap">
         <div ref={mapContainer} className="map" />
       </div>
