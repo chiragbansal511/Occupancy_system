@@ -46,6 +46,11 @@ function App() {
         center: [india.lng, india.lat],
         zoom: zoom
       });
+
+       new maptilersdk.Marker({})
+        .setLngLat([76.39308, 30.68894])
+        .addTo(map.current);
+
     } else {
       markers.forEach(marker => marker.remove());
     }
@@ -100,7 +105,9 @@ function App() {
       </div>
 
       <input type="range" min="0" max="100" defaultValue="0" onChange={(e) => setRange(e.target.value)} />
+          {range}
 
+          
       <button onClick={() => {
         finder(range, {
           latitude: 30.68894,
@@ -108,7 +115,6 @@ function App() {
         })
       }}>Find Locations</button>
 
-      {/* {JSON.stringify(location)} */}
       <div className="map-wrap">
         <div ref={mapContainer} className="map" />
       </div>
