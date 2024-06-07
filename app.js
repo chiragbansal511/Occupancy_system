@@ -9,7 +9,7 @@ const client = new Client({
 
 try {
     client.connect();
-    console.log("sucess");
+    console.log("Connected");
 
     try {
        client.query(`CREATE TABLE testing (name VARCHAR(125) , rollno INT)` , (err , res)=>{
@@ -29,8 +29,8 @@ try {
        });
 
     } catch (error) {
-        console.log("error1" , error);
+        console.log("error handling database" , error);
     }
 } catch (error) {
-    console.log("error" , error);
+    console.log("Connection error" , error);
 }
